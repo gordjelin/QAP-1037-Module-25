@@ -4,6 +4,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pytest
 
+email = "qwerasdf@mail.ru"
+password = "12345"
+
 @pytest.fixture(autouse=True)
 def testing():
   pytest.driver = webdriver.Chrome()
@@ -13,8 +16,8 @@ def testing():
 
 def test_show_all_pets():
   pytest.driver.implicitly_wait(5)
-  pytest.driver.find_element(By.ID, 'email').send_keys('qwerasdf@mail.ru')
-  pytest.driver.find_element(By.ID, 'pass').send_keys('12345')
+  pytest.driver.find_element(By.ID, 'email').send_keys(email)
+  pytest.driver.find_element(By.ID, 'pass').send_keys(password)
   pytest.driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
   images = pytest.driver.find_elements(By.CSS_SELECTOR, '.card-deck .card-img-top')
   names = pytest.driver.find_elements(By.XPATH, '//h5[@class = "card-title"]')
@@ -29,8 +32,8 @@ def test_show_all_pets():
     assert len(parts[1]) > 0
 
 def test_show_my_pets():
-  pytest.driver.find_element(By.ID, 'email').send_keys('qwerasdf@mail.ru')
-  pytest.driver.find_element(By.ID, 'pass').send_keys('12345')
+  pytest.driver.find_element(By.ID, 'email').send_keys(email)
+  pytest.driver.find_element(By.ID, 'pass').send_keys(password)
   pytest.driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
   pytest.driver.find_element(By.XPATH, '//a[contains(text(),"Мои питомцы")]').click()
   my_pets = WebDriverWait(pytest.driver, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//tbody/tr')))
